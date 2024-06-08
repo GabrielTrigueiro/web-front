@@ -1,10 +1,15 @@
+import React from 'react';
+import { Alert, Button } from 'react-bootstrap';
 
-type Props = {}
+type Props = {};
 
 export default function Products({}: Props) {
   return (
     <div>
-        <p className='poppins'>bista</p>
+      <Alert variant="success">calvuasapdjsaoikdjsaodhio</Alert>
+      <div>
+        <Button variant="primary">Teste de Botão</Button>
+      </div>
     </div>
-  )
+  );
 }
