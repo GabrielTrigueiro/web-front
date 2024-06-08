@@ -1,0 +1,16 @@
+.custom-button-group {
+    margin: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .custom-button-group .btn {
+    background-color: #f8f9fa; /* Cor de fundo clara */
+    color: #000; /* Cor do texto */
+    border: 1px solid #ced4da; /* Borda */
+  }
+  
+  .custom-button-group .btn:hover {
+    background-color: #e2e6ea; /* Cor de fundo ao passar o mouse */
+  }
+  

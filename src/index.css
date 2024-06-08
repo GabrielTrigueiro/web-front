@@ -1,11 +1,9 @@
 * {
   margin: 0;
   padding: 0;
-  /* font-family: 'Poppins';
-  background-color: aquamarine; */
 }
-/* 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
+
+body {
+  background-color: #F8F8F8;
+  overflow-x: hidden;
+}

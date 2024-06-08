@@ -5,7 +5,7 @@ import Products from './app/pages/products/products';
 function App() {
   return (
     <Routes>
-      <Route path="/produtos" element={<Products />} />
+      <Route path="/" element={<Products />} />
       <Route path="*" element={<Navigate to="/produtos" />} />
     </Routes>
   );
