@@ -1,0 +1,40 @@
+.full-page {
+  width: 100svw;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  height: 500px;
+  width: 50svw;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  border-radius: 1rem;
+  border: 2px solid #b8b8b8;
+  overflow: hidden;
+}
+
+.logo {
+  flex: 1;
+  background-color: #cfc6c6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.logo p {
+    font-size: 2pc;
+}
+
+.form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
