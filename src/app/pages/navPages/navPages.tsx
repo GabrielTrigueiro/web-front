@@ -1,5 +1,5 @@
-import { Outlet } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import {Outlet} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import DefaultNavbar from "../../components/navbar/navbar";
 
 const NavPages = () => {
@@ -9,10 +9,11 @@ const NavPages = () => {
     // }
 
     return (
-        <div>
-            <DefaultNavbar />
-            <Outlet />
+        <div style={{ height: '100svh', width: '100svw', display: 'flex', flexDirection: 'column'}}>
+            <DefaultNavbar/>
+            <Outlet/>
         </div>
+
     );
 };
 

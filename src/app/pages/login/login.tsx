@@ -47,7 +47,7 @@ function Login() {
                 setToastType("error");
                 setShowToast(true);
                 setIsLoading(false);
-                return err.response.data.errors; //retornar a mensagem de erro
+                return err.response.data.errors;
             });
     }
 
