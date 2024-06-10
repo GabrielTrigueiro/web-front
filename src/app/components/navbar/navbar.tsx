@@ -2,15 +2,17 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import {FaHome, FaUser, FaShoppingCart} from 'react-icons/fa'; // Exemplos de ícones
+import {FaHome, FaUser, FaShoppingCart} from 'react-icons/fa';
 
 import './styles.css';
 
-interface INavbarProps {
-    userName: string;
-}
-
 function DefaultNavbar() {
+
+    const signOut = () =>{
+        localStorage.removeItem("@AuthData");
+        window.location.reload();
+    }
+
     return (
         <Navbar expand="lg" className="custom-navbar">
             <Container>
@@ -28,7 +30,7 @@ function DefaultNavbar() {
                             <NavDropdown.Item href="/conta">Conta</NavDropdown.Item>
                             <NavDropdown.Item href="/pedidos">Pedidos</NavDropdown.Item>
                             <NavDropdown.Divider/>
-                            <NavDropdown.Item onClick={() => console.log('logout')} >Sair</NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => signOut()} >Sair</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

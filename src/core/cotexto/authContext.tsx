@@ -1,16 +1,12 @@
 import {createContext, useContext, useEffect, useMemo, useState} from "react";
 
-import {noAuthAxiosInstance} from "../api/axios/axiosInstance";
-import {GlobalFunctions} from "../utils/globalFunctions";
-import {LOGIN} from "../utils/constans";
-
 export interface IAuthData {
     token: string;
 }
 
 interface IAuthContextData {
     auth?: IAuthData;
-    signOut: () => Promise<any>;
+    signOut: () => void;
     isLoading: boolean;
 }
 
@@ -50,7 +46,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     }
 
     // logout
-    async function signOut() {
+    const signOut = () =>{
         setIsLoading(true);
         localStorage.removeItem("@AuthData");
         setAuth(undefined);
@@ -63,7 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
             signOut,
             isLoading,
         }),
-        [auth, isLoading]
+        [auth, isLoading, signOut]
     );
 
     return (

@@ -95,7 +95,11 @@ export const Account: React.FC = () => {
     }, [isAuthenticated]);
 
     if (!isAuthenticated) {
-        return <h1>Usuário não autenticado</h1>;
+        return <div
+            style={{background: '#fff', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+            <h1>Você não está logado</h1>
+            <Button href="/login" variant="primary" size="lg">Fazer Login</Button>
+        </div>
     }
 
     if (userData === initialValues || isSubmitting) {
@@ -118,7 +122,7 @@ export const Account: React.FC = () => {
                         confirmPassword: '',
                     }}
                     validationSchema={Validations.editClientSchema}
-                    onSubmit={(values, { setSubmitting }) => {
+                    onSubmit={(values, {setSubmitting}) => {
                         handleSubmit(values);
                         setSubmitting(false);
                     }}
