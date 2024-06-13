@@ -1,4 +1,4 @@
-import {createContext, useContext, useEffect, useMemo, useState} from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 export interface IAuthData {
     token: string;
@@ -6,6 +6,7 @@ export interface IAuthData {
 
 interface IAuthContextData {
     auth?: IAuthData;
+    setAuth: React.Dispatch<React.SetStateAction<IAuthData | undefined>>;
     signOut: () => void;
     isLoading: boolean;
 }
@@ -18,35 +19,14 @@ interface AuthProviderProps {
     children: React.ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // estado do token
     const [auth, setAuth] = useState<IAuthData | undefined>();
     // carregamentos
     const [isLoading, setIsLoading] = useState(false);
 
-    // a qualquer momento que abre o app, ele verifica o token
-    useEffect(() => {
-        loadStorageData();
-    }, []);
-
-    // carrega o token do local storage com a key @AuthData
-    async function loadStorageData(): Promise<void> {
-        setIsLoading(true);
-        try {
-            const authDataSerialized = localStorage.getItem("@AuthData");
-            if (authDataSerialized) {
-                setAuth({token: authDataSerialized});
-                setIsLoading(false);
-            }
-        } catch (error) {
-            console.log("token não encontrado");
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
     // logout
-    const signOut = () =>{
+    const signOut = () => {
         setIsLoading(true);
         localStorage.removeItem("@AuthData");
         setAuth(undefined);
@@ -58,6 +38,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
             auth,
             signOut,
             isLoading,
+            setAuth
         }),
         [auth, isLoading, signOut]
     );

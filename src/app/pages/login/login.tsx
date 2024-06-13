@@ -1,15 +1,17 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./style.css";
-import {Form, Button} from "react-bootstrap";
-import {Formik, Field, Form as FormikForm, ErrorMessage} from "formik";
-import {Validations} from "../../../core/utils/validations";
+import { Form, Button } from "react-bootstrap";
+import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
+import { Validations } from "../../../core/utils/validations";
 import Spinner from 'react-bootstrap/Spinner';
-import {ILogin} from "../../../core/models/login";
-import {GlobalFunctions} from "../../../core/utils/globalFunctions";
-import {noAuthAxiosInstance} from "../../../core/api/axios/axiosInstance";
-import {LOGIN} from "../../../core/utils/constans";
+import { ILogin } from "../../../core/models/login";
+import { GlobalFunctions } from "../../../core/utils/globalFunctions";
+import { noAuthAxiosInstance } from "../../../core/api/axios/axiosInstance";
+import { LOGIN } from "../../../core/utils/constans";
 import CustomToast from "../../components/toast/toast";
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
+import { useAuth } from "../../../core/cotexto/authContext";
+import { log } from "console";
 
 const initialValues: ILogin = {
     email: "",
@@ -17,6 +19,8 @@ const initialValues: ILogin = {
 };
 
 function Login() {
+
+    const { setAuth } = useAuth();
 
     const navigate = useNavigate()
 
@@ -35,12 +39,12 @@ function Login() {
                 password: password,
             })
             .then(async (response) => {
+                localStorage.setItem("@AuthData", response.data.token);
                 setToastMessage('Logado com sucesso!');
                 setToastType("success");
                 setShowToast(true);
-                localStorage.setItem("@AuthData", response.data.token);
-                navigate('/inicio')
                 setIsLoading(false);
+                navigate("/inicio");
             })
             .catch((err: any) => {
                 setToastMessage(err.response.data.error);
@@ -71,7 +75,7 @@ function Login() {
                             validationSchema={Validations.loginSchema}
                             onSubmit={(value) => signIn(value.email, value.password)}
                         >
-                            {({isSubmitting}) => (
+                            {({ isSubmitting }) => (
                                 <FormikForm>
                                     <Form.Group className="mb-3" controlId="formEmail">
                                         <Form.Label>Email</Form.Label>
@@ -102,7 +106,7 @@ function Login() {
                                         />
                                     </Form.Group>
                                     <Button variant="primary" type="submit" disabled={isSubmitting || isLoading}>
-                                        {isLoading || isSubmitting ?  <Spinner animation="border" role="status"/> : "Entrar"}
+                                        {isLoading || isSubmitting ? <Spinner animation="border" role="status" /> : "Entrar"}
                                     </Button>
                                 </FormikForm>
                             )}

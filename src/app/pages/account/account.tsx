@@ -1,26 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {jwtDecode} from "jwt-decode";
-import {Formik, Form as FormikForm, Field, ErrorMessage} from 'formik';
-import {Button, Form} from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { jwtDecode } from "jwt-decode";
+import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
+import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
-import {Validations} from "../../../core/utils/validations";
-import {axiosInstance} from "../../../core/api/axios/axiosInstance";
-import {LIST_USERS, UPDATE_USER} from "../../../core/utils/constans";
+import { Validations } from "../../../core/utils/validations";
+import { axiosInstance } from "../../../core/api/axios/axiosInstance";
+import { LIST_USERS, UPDATE_USER } from "../../../core/utils/constans";
 import CustomToast from "../../components/toast/toast";
-
-interface User {
-    id?: number;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    name: string;
-    cpf: string;
-    street: string;
-    city: string;
-    state: string;
-    zip_code: string;
-}
+import { User } from '../../../core/models/user';
 
 const initialValues: User = {
     email: "",
@@ -48,7 +36,7 @@ export const Account: React.FC = () => {
         axiosInstance
             .put(`${UPDATE_USER}${values.id}`, values)
             .then(response => {
-                let user = {...response.data, password: ""};
+                let user = { ...response.data, password: "" };
                 setUserData(user);
                 setToastMessage('Editado com sucesso!');
                 setToastType("success");
@@ -79,7 +67,7 @@ export const Account: React.FC = () => {
         const thisUser = (allUsers.find((user: any) => user.email === decoded.email));
         console.log(thisUser)
         if (thisUser) {
-            let user = {...thisUser, password: ""};
+            let user = { ...thisUser, password: "" };
             setUserData(user)
         }
     };
@@ -95,10 +83,10 @@ export const Account: React.FC = () => {
     }, [isAuthenticated]);
 
     if (!isAuthenticated) {
-        return <div
-            style={{background: '#fff', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+        return <div style={{ background: '#fff', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 2 }}>
             <h1>Você não está logado</h1>
             <Button href="/login" variant="primary" size="lg">Fazer Login</Button>
+            <Button href="/registrarConta" variant="primary" size="lg">Não tem uma conta?</Button>
         </div>
     }
 
@@ -107,7 +95,7 @@ export const Account: React.FC = () => {
     }
 
     return (
-        <div style={{background: '#fff', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div style={{ background: '#fff', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <CustomToast
                 message={toastMessage}
                 type={toastType}
@@ -115,21 +103,21 @@ export const Account: React.FC = () => {
                 onClose={() => setShowToast(false)}
             />
             <div>
-                <h1 style={{textAlign: 'center'}}>Sua conta</h1>
+                <h1 style={{ textAlign: 'center' }}>Sua conta</h1>
                 <Formik
                     initialValues={{
                         ...userData,
                         confirmPassword: '',
                     }}
                     validationSchema={Validations.editClientSchema}
-                    onSubmit={(values, {setSubmitting}) => {
+                    onSubmit={(values, { setSubmitting }) => {
                         handleSubmit(values);
                         setSubmitting(false);
                     }}
                 >
-                    {({values, isSubmitting, dirty}) => (
-                        <FormikForm style={{display: 'flex', flexDirection: 'column'}}>
-                            <div style={{width: 800, height: 400, overflowY: 'scroll'}}>
+                    {({ values, isSubmitting, dirty }) => (
+                        <FormikForm style={{ display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ width: 800, height: 400, overflowY: 'scroll' }}>
                                 <Form.Group className="m-2" controlId="formEmail">
                                     <Form.Label>Email</Form.Label>
                                     <Field
@@ -138,50 +126,50 @@ export const Account: React.FC = () => {
                                         placeholder="name@example.com"
                                         className="form-control"
                                     />
-                                    <ErrorMessage name="email" component="div" className="text-danger"/>
+                                    <ErrorMessage name="email" component="div" className="text-danger" />
                                 </Form.Group>
 
                                 <Form.Group className="m-2" controlId="formName">
                                     <Form.Label>Nome</Form.Label>
-                                    <Field name="name" type="text" placeholder="Nome" className="form-control"/>
-                                    <ErrorMessage name="name" component="div" className="text-danger"/>
+                                    <Field name="name" type="text" placeholder="Nome" className="form-control" />
+                                    <ErrorMessage name="name" component="div" className="text-danger" />
                                 </Form.Group>
 
                                 <Form.Group className="m-2" controlId="formCpf">
                                     <Form.Label>CPF</Form.Label>
-                                    <Field name="cpf" type="text" placeholder="CPF" className="form-control"/>
-                                    <ErrorMessage name="cpf" component="div" className="text-danger"/>
+                                    <Field name="cpf" type="text" placeholder="CPF" className="form-control" />
+                                    <ErrorMessage name="cpf" component="div" className="text-danger" />
                                 </Form.Group>
 
                                 <Form.Group className="m-2" controlId="formStreet">
                                     <Form.Label>Rua</Form.Label>
-                                    <Field name="street" type="text" placeholder="Rua" className="form-control"/>
-                                    <ErrorMessage name="street" component="div" className="text-danger"/>
+                                    <Field name="street" type="text" placeholder="Rua" className="form-control" />
+                                    <ErrorMessage name="street" component="div" className="text-danger" />
                                 </Form.Group>
 
                                 <Form.Group className="m-2" controlId="formCity">
                                     <Form.Label>Cidade</Form.Label>
-                                    <Field name="city" type="text" placeholder="Cidade" className="form-control"/>
-                                    <ErrorMessage name="city" component="div" className="text-danger"/>
+                                    <Field name="city" type="text" placeholder="Cidade" className="form-control" />
+                                    <ErrorMessage name="city" component="div" className="text-danger" />
                                 </Form.Group>
 
                                 <Form.Group className="m-2" controlId="formState">
                                     <Form.Label>Estado</Form.Label>
-                                    <Field name="state" type="text" placeholder="Estado" className="form-control"/>
-                                    <ErrorMessage name="state" component="div" className="text-danger"/>
+                                    <Field name="state" type="text" placeholder="Estado" className="form-control" />
+                                    <ErrorMessage name="state" component="div" className="text-danger" />
                                 </Form.Group>
 
                                 <Form.Group className="m-2" controlId="formZipCode">
                                     <Form.Label>CEP</Form.Label>
-                                    <Field name="zip_code" type="text" placeholder="CEP" className="form-control"/>
-                                    <ErrorMessage name="zip_code" component="div" className="text-danger"/>
+                                    <Field name="zip_code" type="text" placeholder="CEP" className="form-control" />
+                                    <ErrorMessage name="zip_code" component="div" className="text-danger" />
                                 </Form.Group>
 
                                 <Form.Group className="m-2" controlId="formPassword">
                                     <Form.Label>Senha</Form.Label>
                                     <Field name="password" type="password" placeholder="Senha"
-                                           className="form-control"/>
-                                    <ErrorMessage name="password" component="div" className="text-danger"/>
+                                        className="form-control" />
+                                    <ErrorMessage name="password" component="div" className="text-danger" />
                                 </Form.Group>
 
                                 <Form.Group className="m-2" controlId="formConfirmPassword">
@@ -192,11 +180,11 @@ export const Account: React.FC = () => {
                                         placeholder="Confirme a Senha"
                                         className="form-control"
                                     />
-                                    <ErrorMessage name="confirmPassword" component="div" className="text-danger"/>
+                                    <ErrorMessage name="confirmPassword" component="div" className="text-danger" />
                                 </Form.Group>
                             </div>
-                            <Button style={{margin: 'auto'}} variant="primary" type="submit"
-                                    disabled={isSubmitting || !dirty}>
+                            <Button style={{ margin: 'auto' }} variant="primary" type="submit"
+                                disabled={isSubmitting || !dirty}>
                                 Salvar
                             </Button>
                         </FormikForm>
