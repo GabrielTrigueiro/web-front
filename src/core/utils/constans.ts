@@ -7,3 +7,4 @@ export const REGISTER_USER = `${BACKEND_BASE_URL}registerUser`;
 export const REGISTER_INDICATION = `${BACKEND_BASE_URL}registerIndication`;
 export const REGISTER_PRODUCT = `${BACKEND_BASE_URL}registerProduct`;
 export const NEW_SALE = `${BACKEND_BASE_URL}newSale`;
+export const USER_ORDERS = `${BACKEND_BASE_URL}sale/`;

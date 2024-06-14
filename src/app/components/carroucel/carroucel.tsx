@@ -1,47 +1,45 @@
 import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import { Product } from '../../../core/models/product';
 
-function ControlledCarousel() {
+interface ICarouselProps {
+  products: Product[];
+}
+
+function ControlledCarousel(props: ICarouselProps) {
   const [index, setIndex] = useState<number>(0);
 
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
   };
 
+  if (props.products.length === 0) return <div>Carregando...</div>
+
   return (
     <Carousel activeIndex={index} onSelect={handleSelect}>
       <Carousel.Item>
         <img
           className="d-block w-80 h-20 m-auto"
-          src="https://via.placeholder.com/800x400?text=First+slide"
+          style={{ height: "40svh", width: "30svw", objectFit: "cover" }}
+          src={`http://localhost:3333${props.products[0].img}`}
           alt="First slide"
         />
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-80 h-20 m-auto"
-          src="https://via.placeholder.com/800x400?text=Second+slide"
-          alt="Second slide"
+          style={{ height: "40svh", width: "30svw", objectFit: "cover" }}
+          src={`http://localhost:3333${props.products[1].img}`}
+          alt="First slide"
         />
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-80 h-20 m-auto"
-          src="https://via.placeholder.com/800x400?text=Third+slide"
-          alt="Third slide"
+          style={{ height: "40svh", width: "30svw", objectFit: "cover" }}
+          src={`http://localhost:3333${props.products[4].img}`}
+          alt="First slide"
         />
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
   );

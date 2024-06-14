@@ -20,6 +20,9 @@ export const BuyCart = () => {
   const { items, clearCart } = useCartContext();
 
   const [isAuthenticated, setIsAuthenticated] = useState<string | null>(null);
+  const [total, setTotal] = useState(items.reduce((acc, item) => {
+    return acc + item.product.preco * item.quantity;
+  }, 0))
 
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -30,10 +33,11 @@ export const BuyCart = () => {
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<"error" | "success">("success");
 
-  // calcular total
-  const total = items.reduce((acc, item) => {
-    return acc + item.product.preco * item.quantity;
-  }, 0);
+  useEffect(() => {
+    setTotal((items.reduce((acc, item) => {
+      return acc + item.product.preco * item.quantity;
+    }, 0)) - (indication?.desconto ?? 0))
+  }, [items, indication])
 
   // verificar a indicacao
   const verifyIndication = async () => {
@@ -60,7 +64,6 @@ export const BuyCart = () => {
     if (!token) return null;
     const decoded: any = jwtDecode(token);
     console.log(decoded);
-
     return decoded.id;
   };
 
@@ -69,7 +72,7 @@ export const BuyCart = () => {
     // setIsSubmitting(true);
     setError(null);
     const saleData = {
-      valor_total: total,
+      valor_total: indication ? total - indication.desconto : total,
       cliente_id: getUserIdFromToken(isAuthenticated),
       indicacao_id: indication?.id ?? null, // Ajuste conforme necessário
       num_parcelas: 1, // Ajuste conforme necessário
@@ -223,9 +226,8 @@ export const BuyCart = () => {
         </div>
         {showToast && (
           <div
-            className={`toast ${
-              toastType === "success" ? "toast-success" : "toast-error"
-            }`}
+            className={`toast ${toastType === "success" ? "toast-success" : "toast-error"
+              }`}
           >
             {toastMessage}
           </div>

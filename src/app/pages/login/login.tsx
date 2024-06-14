@@ -105,9 +105,12 @@ function Login() {
                                             className="text-danger"
                                         />
                                     </Form.Group>
-                                    <Button variant="primary" type="submit" disabled={isSubmitting || isLoading}>
-                                        {isLoading || isSubmitting ? <Spinner animation="border" role="status" /> : "Entrar"}
-                                    </Button>
+                                    <div className="d-flex flex-column">
+                                        <Button variant="primary" type="submit" disabled={isSubmitting || isLoading}>
+                                            {isLoading || isSubmitting ? <Spinner animation="border" role="status" /> : "Entrar"}
+                                        </Button>
+                                        <a href="/registrarConta">Não tem uma conta?</a>
+                                    </div>
                                 </FormikForm>
                             )}
                         </Formik>

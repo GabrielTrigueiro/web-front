@@ -10,6 +10,7 @@ import Card from "react-bootstrap/Card";
 import { Button } from "react-bootstrap";
 import { Product } from "../../../core/models/product";
 import { useCartContext } from "../../../core/cotexto/ICardContext";
+import { useNavigate } from "react-router";
 
 export default function Products() {
   const { addToCart } = useCartContext();
@@ -30,16 +31,18 @@ export default function Products() {
     <div className="full-page-massa">
       <div className=" home-page-body">
         <DefaultContainer>
-          <ControlledCarousel />
+          <ControlledCarousel products={produtos} />
           <ProductCategories />
-          <div className="product-list">
-            {produtos.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                addToCart={addToCart}
-              />
-            ))}
+          <div className="container">
+            <div className="row">
+              {produtos.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  addToCart={addToCart}
+                />
+              ))}
+            </div>
           </div>
         </DefaultContainer>
       </div>
@@ -55,28 +58,29 @@ interface ICardProps {
 const ProductCard = ({ addToCart, product }: ICardProps) => {
   const { items } = useCartContext();
 
-  const { nome, descricao, preco, estoque, img } = product;
+  const navigate = useNavigate();
+
+  const { nome, descricao, preco, estoque, img, id } = product;
+
+  // navega para rota do produto
+  const handleClick = () => {
+    navigate(`/produto/${id}`);
+  };
 
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src={`http://localhost:3333${img}`} alt={nome} />
-      <Card.Body>
-        <Card.Title>{nome}</Card.Title>
-        <Card.Text>{descricao}</Card.Text>
-        <Card.Text>Preço: R${preco}</Card.Text>
-        <Card.Text>Estoque: {estoque}</Card.Text>
-        <Button
-          disabled={items.some((item) => {
+    <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={id}>
+      <div style={{ height: '100%' }} className="card">
+        <img onClick={handleClick} src={`http://localhost:3333${img}`} className="card-img-top object-fit-contain" alt={nome} />
+        <div className="card-body">
+          <h5 className="card-title">{nome}</h5>
+          <p className="card-text">{descricao}</p>
+          <button disabled={items.some((item) => {
             if (item.product.id === product.id) {
               return item.product.estoque <= item.quantity;
             }
-          })}
-          onClick={() => addToCart(product)}
-          variant="primary"
-        >
-          + Carrinho
-        </Button>
-      </Card.Body>
-    </Card>
+          })} onClick={() => addToCart(product)} className="btn btn-primary">Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
   );
 };
