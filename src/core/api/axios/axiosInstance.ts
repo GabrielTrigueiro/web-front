@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
     (error: any) => {
         if (error) {
             const errorMessage =
-                getMessageFromBody(error.response) ||
+                getMessageFromBody(error.response) || error.response.data.message ||
                 getMessageFromHttpStatus(error.response?.status) ||
                 "erro de token";
             throw new Error(errorMessage);

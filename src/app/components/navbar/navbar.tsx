@@ -58,7 +58,7 @@ function DefaultNavbar() {
                     <NavDropdown title={<span><FaUser size={20}/> Perfil</span>} id="basic-nav-dropdown">
                         <NavDropdown.Item href="/conta">Conta</NavDropdown.Item>
                         {userType !== 'seller' && <NavDropdown.Item href="/pedidos">Pedidos</NavDropdown.Item>}
-                        {userType === '' && <>
+                        {(userType === 'seller' || userType === "client") && <>
                             <NavDropdown.Divider/>
                             <NavDropdown.Item onClick={() => signOut()}>Sair</NavDropdown.Item></>}
                     </NavDropdown>
