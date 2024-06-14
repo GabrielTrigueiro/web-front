@@ -22,8 +22,7 @@ const produtoSchema = Yup.object().shape({
     .min(3, "O nome deve ter pelo menos 3 caracteres")
     .max(100, "O nome pode ter no máximo 100 caracteres"),
   descricao: Yup.string()
-    .nullable()
-    .max(1000, "A descrição pode ter no máximo 1000 caracteres"),
+    .min(20, "A descrição tem que ter no mínimo 20 caracteres"),
   preco: Yup.number()
     .required("O preço é obrigatório")
     .min(0.01, "O preço deve ser maior que 0")
@@ -34,6 +33,7 @@ const produtoSchema = Yup.object().shape({
     .min(0, "O estoque não pode ser negativo")
     .typeError("O estoque deve ser um número válido"),
   img: Yup.string().required("A imagem é obrigatória"),
+  categoria: Yup.string().required("A categoria é obrigatória"),
 });
 
 const editClientSchema = Yup.object().shape({
