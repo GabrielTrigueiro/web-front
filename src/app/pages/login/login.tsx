@@ -64,7 +64,7 @@ function Login() {
                 onClose={() => setShowToast(false)}
             />
             <div className="full-page">
-                <div className="login-container">
+                <div className="login-container shadow rounded">
                     <div className="logo">
                         <p className="poppins-semibold">Logo</p>
                     </div>
